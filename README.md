@@ -5,8 +5,10 @@ This is a group assignment with the purpose to plan and develop a basic kanban b
 
 **Course:** "Webdevelopment" @ Borås Yrkeshögskola 2020.
 
-## Title here
-Add very informative and cool stuff here for the public to see and get amazed over.
+**Trello board:** [Kanban-Meta-G2](https://trello.com/b/JOtA4yrL/kanban-meta-g2)
+
+## Awesome cool title here
+Add very informative and cool stuff for the public to see and get amazed over. Donation link should be added asap.
 
 ## Masterminds behind Group 2
   + Johannes Andersson
