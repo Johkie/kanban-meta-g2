@@ -11,9 +11,9 @@ This is a group assignment with the purpose to plan and develop a basic kanban b
 Add very informative and cool stuff for the public to see and get amazed over. Donation link should be added asap.
 
 ## Masterminds behind Group 2
+  + Gabriella Westberg (Project Leader)
   + Johannes Andersson
   + Alexander Esbjörnsson
   + Thomas Karlsson
   + Joel Nilsson
-  + Gabriella Westberg
   + Philip "P4" Vesterlund
