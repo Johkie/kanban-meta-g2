@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - NuTrello</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -19,13 +21,21 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Boards</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Index"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Index"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
