@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 using NuTrello.Data.Context;
+using NuTrello.Data.Repository;
 
 namespace NuTrello
 {
@@ -31,6 +32,7 @@ namespace NuTrello
             // Database
             string dbName = "Data/nutrello.db";
             services.AddDbContext<NuTrelloContext>(opt => opt.UseSqlite($"Data Source={dbName}"));
+            services.AddScoped<IBoardRepository, BoardRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

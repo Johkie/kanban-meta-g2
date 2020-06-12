@@ -1,22 +1,39 @@
 using System;
 using NuTrello.Data.Context;
+using NuTrello.Models;
+using System.Linq;
 
-namespace NuTrello.Data.Repository 
+namespace NuTrello.Data.Repository
 {
     public interface IBoardRepository
     {
-        public int InitializeNewBoard();
+        public int? InitializeNewBoard();
         public bool DeleteBoard(int boardId);
         public bool ModifyBoardInfo(int boardId, string param, string newValue);
     }
     public class BoardRepository : IBoardRepository
     {
+        private readonly NuTrelloContext _context;
+        public BoardRepository(NuTrelloContext context)
+        {
+            _context = context;
+        }
         /// <summary>Initialize a new board.
         /// Returns the id of the new board if succeded.
         /// Returns null if failed.</summary>
-        public int InitializeNewBoard()
+        public int? InitializeNewBoard()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var board = new BoardModel { Title = "MyBoard", Description = "Is a board" };
+                _context.Boards.Add(board);
+                _context.SaveChanges();
+                return board.Id;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>Method to delete a board based of id.
@@ -24,7 +41,18 @@ namespace NuTrello.Data.Repository
         /// <param name="boardId">The id of the board.</param>
         public bool DeleteBoard(int boardId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var board = _context.Boards.First(b => b.Id == boardId);
+                _context.Boards.Remove(board);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>Method to modify a boards information based of id.
