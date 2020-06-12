@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+
+using NuTrello.Context;
 
 namespace NuTrello
 {
@@ -24,6 +27,10 @@ namespace NuTrello
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            
+            // Database
+            string dbName = "Data/nutrello.db";
+            services.AddDbContext<NuTrelloContext>(opt => opt.UseSqlite($"Data Source={dbName}"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
