@@ -6,7 +6,21 @@
 
 <div class="text-left">
     Coola saker som knappar och listor här
+    
 </div>
 <div class="text-primary text-center">
-    Här ska det vara en board såsmåningom
+    Här ska det vara en board så småningom
+    <br>
+    @* if boards are empty, render a button to add a board *@
+    @if (Model.boards == null)
+    {
+        <button>Create a Board</button>
+    }
+    else{
+        //  INTE I MVP: foreach board, rendera en button för varje bräde.
+        // Visa brädets knapp
+        <div>
+            <button id="2">Brädknapp</button>
+        </div>
+    }
 </div>

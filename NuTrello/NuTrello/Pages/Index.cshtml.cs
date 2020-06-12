@@ -10,6 +10,13 @@ namespace NuTrello.Pages
 {
     public class IndexModel : PageModel
     {
+
+        // Här ska listan på bräden genereras om bräden finns
+        // skall ta in alt. generera ett id som vi sedan appendar till boards ex. boards/{id}
+
+
+        //random variable to vizualise an existing board
+        public string boards = "ett bräde";
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -21,5 +28,7 @@ namespace NuTrello.Pages
         {
 
         }
+
+
     }
 }
