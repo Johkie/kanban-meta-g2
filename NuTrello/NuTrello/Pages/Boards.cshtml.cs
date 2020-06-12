@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace NuTrello.Pages
 {
+
+    // Här vill vi ha all information om brädet(id) som vi valt att visa
+    //
+    
     public class BoardsModel : PageModel
     {
-        public List<string> Lists;
+
         public void OnGet()
         {
 

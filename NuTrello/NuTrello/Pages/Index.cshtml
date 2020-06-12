@@ -17,7 +17,10 @@
         <button class="createBoard" asp-area="" asp-page="/Boards/2">Create a Board</button>
     }
     else{
-    <div id="board-title">Board Title</div>
-    <div id="board-content">@Model.boards</div>
+        //  INTE I MVP: foreach board, rendera en button för varje bräde.
+        // Visa brädets knapp
+        <div>
+            <button id="2">Brädknapp</button>
+        </div>
     }
 </div>
