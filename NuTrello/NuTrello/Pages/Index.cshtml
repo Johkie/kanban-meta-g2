@@ -14,7 +14,7 @@
     @* if boards are empty, render a button to add a board *@
     @if (Model.boards == null)
     {
-        <button>Create a Board</button>
+        <button class="createBoard" asp-area="" asp-page="/Boards/2">Create a Board</button>
     }
     else{
     <div id="board-title">Board Title</div>

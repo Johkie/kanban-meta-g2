@@ -9,6 +9,7 @@ namespace NuTrello.Pages
 {
     public class BoardsModel : PageModel
     {
+        public List<string> Lists;
         public void OnGet()
         {
 
