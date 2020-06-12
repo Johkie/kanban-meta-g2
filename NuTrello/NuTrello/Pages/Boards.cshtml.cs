@@ -13,7 +13,8 @@ namespace NuTrello.Pages
     
     public class BoardsModel : PageModel
     {
-
+        public List<string> lists= new List<string>(){"todo","doing","done"};
+        public List<string> tasks= new List<string>(){"doing 1","doing 2","doing 3"};
         public void OnGet()
         {
 

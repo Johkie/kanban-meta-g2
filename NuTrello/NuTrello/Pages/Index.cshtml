@@ -14,13 +14,13 @@
     @* if boards are empty, render a button to add a board *@
     @if (Model.boards == null)
     {
-        <button>Create a Board</button>
+        <button class="createBoard" asp-area="" asp-page="/Boards/2">Create a Board</button>
     }
     else{
         //  INTE I MVP: foreach board, rendera en button för varje bräde.
         // Visa brädets knapp
         <div>
-            <button id="2">Brädknapp</button>
+            <button id="2" onclick="/Boards">Brädknapp</button>
         </div>
     }
 </div>

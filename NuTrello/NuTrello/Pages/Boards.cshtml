@@ -6,8 +6,21 @@
 
 <h1>Boards</h1>
 
-<div>
+<ul class="list-group list-group-horizontal-md">
+@foreach (var list in @Model.lists)
+{
+  <li class="list-group-item" id="@list">@list</li>
+  <ul class="list-group">
+  @foreach (var task in @Model.tasks)
+  {
+      if (true)
+      {     
+        <li class="list-group-item">@task</li>
+      }
+  }
+</ul>
+}
+<div class ="list-group-item"><button>create list</button></div>
+</ul>
 
-    
-</div>
 
