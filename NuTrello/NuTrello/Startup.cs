@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 
-using NuTrello.Context;
+using NuTrello.Data.Context;
 
 namespace NuTrello
 {

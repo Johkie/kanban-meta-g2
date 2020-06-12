@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NuTrello.Models;
 
-namespace NuTrello.Context
+namespace NuTrello.Data.Context
 {
     public class NuTrelloContext : DbContext
     {
