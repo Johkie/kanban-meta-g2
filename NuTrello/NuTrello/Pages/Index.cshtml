@@ -6,7 +6,18 @@
 
 <div class="text-left">
     Coola saker som knappar och listor här
+    
 </div>
 <div class="text-primary text-center">
-    Här ska det vara en board såsmåningom
+    Här ska det vara en board så småningom
+    <br>
+    @* if boards are empty, render a button to add a board *@
+    @if (Model.boards == null)
+    {
+        <button>Create a Board</button>
+    }
+    else{
+    <div id="board-title">Board Title</div>
+    <div id="board-content">@Model.boards</div>
+    }
 </div>
