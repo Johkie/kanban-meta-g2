@@ -10,6 +10,8 @@ namespace NuTrello.Pages
 {
     public class IndexModel : PageModel
     {
+        //random variable to vizualise an existing board
+        public string boards /*= "ett bräde"*/;
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -21,5 +23,7 @@ namespace NuTrello.Pages
         {
 
         }
+
+
     }
 }
