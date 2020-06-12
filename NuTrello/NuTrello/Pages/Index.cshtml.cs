@@ -19,6 +19,14 @@ namespace NuTrello.Pages
         public string boards = "ett bräde";
         private readonly ILogger<IndexModel> _logger;
 
+
+        public void inserList()
+        {
+            
+
+
+        }
+
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
