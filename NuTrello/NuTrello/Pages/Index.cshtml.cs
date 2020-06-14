@@ -14,16 +14,15 @@ namespace NuTrello.Pages
         // Här ska listan på bräden genereras om bräden finns
         // skall ta in alt. generera ett id som vi sedan appendar till boards ex. boards/{id}
 
-
         //random variable to vizualise an existing board
-        public string boards = "ett bräde";
+        public List<string> boards =  new List<string>{"board one", "board two", "board three", "board four", "board five", "board six"};
         private readonly ILogger<IndexModel> _logger;
 
 
-        public void inserList()
+        public void insertList()
         {
             
-
+            
 
         }
 
