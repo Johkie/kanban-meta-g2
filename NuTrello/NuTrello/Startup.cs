@@ -32,6 +32,8 @@ namespace NuTrello
             // Database
             string dbName = "Data/nutrello.db";
             services.AddDbContext<NuTrelloContext>(opt => opt.UseSqlite($"Data Source={dbName}"));
+
+            // Add dependency injection
             services.AddScoped<IBoardRepository, BoardRepository>();
         }
 
