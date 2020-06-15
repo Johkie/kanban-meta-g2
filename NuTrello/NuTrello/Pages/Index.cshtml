@@ -1,32 +1,51 @@
 ﻿@page
 @model IndexModel
+<link rel="stylesheet" href="~/css/index.css" />
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-left">
-    Coola saker som knappar och listor här
-    
-</div>
 <div class="text-primary text-center">
-    Här ska det vara en board så småningom
     <br>
-    @* if boards are empty, render a button to add a board *@
-    @if (Model.boards == null)
+    <div class="boards-list">
+    @if (Model.boards != null)
     {
-        <button class="createBoard" asp-area="" asp-page="/Boards/2">Create a Board</button>
-    }
-    else{
-        //  INTE I MVP: foreach board, rendera en button för varje bräde.
-        // Visa brädets knapp
-        <div>
-            <button id="2" onclick="/Boards">Brädknapp</button>
+        @foreach (var board in Model.boards)
+        {          
+        <div class="board-btn">
+            <a id="@board" asp-area="" asp-page="/Boards">
+            <button> @board</button>
+            </a>
         </div>
-
-<div class ="lägg-till-board-knapp">
-    <h1>Board</h1>
-    <img src="~/img/plus-circle-solid.svg" weight="64" height="64" onclick="insertList()" />
-
-</div>
+        }
     }
+    </div>
+    <div class ="addBoard">
+        <h1>Board</h1>
+        @* <a class="nav-link text-dark" asp-area="" asp-page="/Boards"> *@
+        <img src="~/img/plus-circle-solid.svg" weight="64" height="64" data-toggle="modal" data-target="#boardModal" />
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="boardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" placeholder="Enter Title">
+        <textarea name="task-desc" style="width:300px; height:200;" placeholder="Enter Description"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
+        <button type="submit" class="btn btn-primary" onclick="@Model.insertList()">Create Task</button>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
