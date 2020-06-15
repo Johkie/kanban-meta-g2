@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 namespace NuTrello.Models
 {
-    public class BoardModel
+    public class DbTaskModel
     {
         public int Id { get; set; }
+        public int DbListsModelId { get; set; }
+        public DbListModel DbListsModel { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public ICollection<ListModel> BoardLists { get; set; } = new List<ListModel>();
+        public int TaskOrder { get; set; }
     }
 }

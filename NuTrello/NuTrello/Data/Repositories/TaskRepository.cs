@@ -7,7 +7,7 @@ namespace NuTrello.Data.Repository
 {
     public interface ITaskRepository
     {
-        public int? InitializeNewTask(int listId);
+        public int? InitializeNewTask(int listId, string title, string desc);
         public bool DeleteTask(int boardId);
         public bool ModifyTaskInfo(int boardId, string param, string newValue);
     }
@@ -18,15 +18,18 @@ namespace NuTrello.Data.Repository
         {
             _context = context;
         }
+        
         /// <summary>Initialize a new task for specified list id.
         /// Returns the id of the new task if succeded.
         /// Returns null if failed.</summary>
          /// <param name="listId">The id of the list to add a task.</param>
-        public int? InitializeNewTask(int listId)
+         /// <param name="title">The title of the task.</param>
+         /// <param name="desc">The description of the task.</param>
+        public int? InitializeNewTask(int listId, string title, string desc)
         {
             try
             {
-                // var board = new BoardModel { Title = "MyBoard", Description = "Is a board" };
+                // var task = new TaskModel { BoardListsModelId  Title = "MyBoard", Description = "Is a board" };
                 // _context.Boards.Add(board);
                 // _context.SaveChanges();
                 // return board.Id;

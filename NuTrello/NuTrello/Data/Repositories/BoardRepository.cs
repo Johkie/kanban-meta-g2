@@ -9,8 +9,8 @@ namespace NuTrello.Data.Repository
     public interface IBoardRepository
     {
         public int? InitializeNewBoard(string title, string description);
-        public List<BoardModel> GetBoards();
-        public BoardModel GetBoard(int boardId);
+        public List<DbBoardModel> GetBoards();
+        public DbBoardModel GetBoard(int boardId);
         public bool DeleteBoard(int boardId);
         public bool ModifyBoardInfo(int boardId, string param, string newValue);
     }
@@ -30,7 +30,7 @@ namespace NuTrello.Data.Repository
         {
             try
             {
-                var board = new BoardModel { Title = title, Description = description };
+                var board = new DbBoardModel { Title = title, Description = description };
                 _context.Boards.Add(board);
                 _context.SaveChanges();
                 return board.Id;
@@ -73,11 +73,11 @@ namespace NuTrello.Data.Repository
 
         /// <summary>Method to get all boards from the database.
         /// Returns a list of all boards.</summary>
-        public List<BoardModel> GetBoards()
+        public List<DbBoardModel> GetBoards()
         {
             try
             {
-                List<BoardModel> boards = _context.Boards.ToList();
+                List<DbBoardModel> boards = _context.Boards.ToList();
                 return (boards != null) ? boards : null;
             }
             catch
@@ -89,11 +89,11 @@ namespace NuTrello.Data.Repository
         /// <summary>Method to get a specific board from the database.
         /// Returns the board if found.</summary>
         /// <param name="boardId">The id of the board.</param>
-        public BoardModel GetBoard(int boardId)
+        public DbBoardModel GetBoard(int boardId)
         {
             try
             {
-                BoardModel board = _context.Boards.First(b => b.Id == boardId);
+                DbBoardModel board = _context.Boards.First(b => b.Id == boardId);
                 return (board != null) ? board : null;
             }
             catch
