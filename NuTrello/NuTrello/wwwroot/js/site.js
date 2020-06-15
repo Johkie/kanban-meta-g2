@@ -3,10 +3,3 @@
 
 // Write your Javascript code.
 
-function getListsByBoardId(id){
-    array.forEach(element => {
-        if (element.id == id) {
-           return element; 
-        }
-    });
-}

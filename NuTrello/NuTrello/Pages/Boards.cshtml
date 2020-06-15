@@ -13,14 +13,61 @@
   <ul class="list-group">
   @foreach (var task in @Model.tasks)
   {
-      if (true)
+      if (list == task)
       {     
         <li class="list-group-item">@task</li>
       }
   }
+        <button data-toggle="modal" data-target="#taskModal">Create New Task</button>
 </ul>
 }
-<div class ="list-group-item"><button>create list</button></div>
+<button data-toggle="modal" data-target="#listModal">Create New List</button>
 </ul>
 
 
+<!-- Task Modal -->
+<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" placeholder="Enter Title">
+        <textarea name="message" style="width:300px; height:200;" placeholder="Enter Description"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
+        <button type="submit" class="btn btn-primary" onclick="@Model.insertTask()">Create Task</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- List Modal -->
+<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" placeholder="Enter Title">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
+        <button type="submit" class="btn btn-primary" onclick="@Model.insertTask()">Create List</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

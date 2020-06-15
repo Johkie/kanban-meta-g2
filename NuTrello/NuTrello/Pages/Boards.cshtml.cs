@@ -14,10 +14,15 @@ namespace NuTrello.Pages
     public class BoardsModel : PageModel
     {
         public List<string> lists= new List<string>(){"todo","doing","done"};
-        public List<string> tasks= new List<string>(){"doing 1","doing 2","doing 3"};
+        public List<string> tasks= new List<string>(){"todo","todo","doing","todo","done","todo"};
         public void OnGet()
         {
 
+        }
+
+        public string insertTask()
+        {
+            return "Task Created";
         }
     }
 }
