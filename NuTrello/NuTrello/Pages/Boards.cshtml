@@ -1,4 +1,5 @@
 ﻿@page
+<link rel="stylesheet" href="~/css/boards.css" />
 @model NuTrello.Pages.BoardsModel
 @{
     ViewData["Title"] = "Boards";
@@ -6,11 +7,15 @@
 
 <h1>Boards</h1>
 
-<ul class="list-group list-group-horizontal-md">
+  <div class="render-list">
+@* <ul class="list-group list-group-horizontal-md"> *@
 @foreach (var list in @Model.lists)
 {
-  <li class="list-group-item" id="@list">@list</li>
-  <ul class="list-group">
+  @* <div class="list-item">@list</div> *@
+  <div class="task-items">
+  <label for="task-group">@list</label>
+  @* <li class="list-group-item" id="@list">@list</li> *@
+  <ul class="list-group task-group">
   @foreach (var task in @Model.tasks)
   {
       if (list == task)
@@ -20,9 +25,11 @@
   }
         <button data-toggle="modal" data-target="#taskModal">Create New Task</button>
 </ul>
+  </div>
 }
 <button data-toggle="modal" data-target="#listModal">Create New List</button>
-</ul>
+@* </ul> *@
+</div>
 
 
 <!-- Task Modal -->
@@ -37,7 +44,7 @@
       </div>
       <div class="modal-body">
         <input type="text" placeholder="Enter Title">
-        <textarea name="message" style="width:300px; height:200;" placeholder="Enter Description"></textarea>
+        <textarea name="task-desc" style="width:300px; height:200;" placeholder="Enter Description"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

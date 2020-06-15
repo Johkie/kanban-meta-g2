@@ -17,7 +17,7 @@ namespace NuTrello.Pages
         public List<string> tasks= new List<string>(){"todo","todo","doing","todo","done","todo"};
         public void OnGet()
         {
-
+            System.Console.WriteLine("här är vi nu");
         }
 
         public string insertTask()
