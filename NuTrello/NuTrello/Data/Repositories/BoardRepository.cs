@@ -8,7 +8,7 @@ namespace NuTrello.Data.Repository
 {
     public interface IBoardRepository
     {
-        public int? InitializeNewBoard();
+        public int? InitializeNewBoard(string title, string description);
         public List<BoardModel> GetBoards();
         public BoardModel GetBoard(int boardId);
         public bool DeleteBoard(int boardId);
@@ -26,11 +26,11 @@ namespace NuTrello.Data.Repository
         /// <summary>Initialize a new board.
         /// Returns the id of the new board if succeded.
         /// Returns null if failed.</summary>
-        public int? InitializeNewBoard()
+        public int? InitializeNewBoard(string title, string description)
         {
             try
             {
-                var board = new BoardModel { Title = "MyBoard", Description = "Is a board" };
+                var board = new BoardModel { Title = title, Description = description };
                 _context.Boards.Add(board);
                 _context.SaveChanges();
                 return board.Id;
