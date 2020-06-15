@@ -6,8 +6,8 @@ namespace NuTrello.Models
     public class DbTaskModel
     {
         public int Id { get; set; }
-        public int DbListsModelId { get; set; }
-        public DbListModel DbListsModel { get; set; }
+        public int DbListModelId { get; set; }
+        public DbListModel DbListModel { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int TaskOrder { get; set; }

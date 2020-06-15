@@ -27,7 +27,7 @@ namespace NuTrello.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DbBoardsModelId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,7 +46,7 @@ namespace NuTrello.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DbListsModelId = table.Column<int>(nullable: false),
+                    DbListModelId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     TaskOrder = table.Column<int>(nullable: false)
@@ -55,8 +55,8 @@ namespace NuTrello.Data.Migrations
                 {
                     table.PrimaryKey("PK_Tasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tasks_Lists_DbListsModelId",
-                        column: x => x.DbListsModelId,
+                        name: "FK_Tasks_Lists_DbListModelId",
+                        column: x => x.DbListModelId,
                         principalTable: "Lists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -68,9 +68,9 @@ namespace NuTrello.Data.Migrations
                 column: "DbBoardsModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tasks_DbListsModelId",
+                name: "IX_Tasks_DbListModelId",
                 table: "Tasks",
-                column: "DbListsModelId");
+                column: "DbListModelId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

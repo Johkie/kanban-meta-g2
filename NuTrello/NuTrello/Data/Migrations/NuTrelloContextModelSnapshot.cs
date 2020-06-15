@@ -41,7 +41,7 @@ namespace NuTrello.Data.Migrations
                     b.Property<int>("DbBoardsModelId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -57,7 +57,7 @@ namespace NuTrello.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DbListsModelId")
+                    b.Property<int>("DbListModelId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -71,7 +71,7 @@ namespace NuTrello.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DbListsModelId");
+                    b.HasIndex("DbListModelId");
 
                     b.ToTable("Tasks");
                 });
@@ -87,9 +87,9 @@ namespace NuTrello.Data.Migrations
 
             modelBuilder.Entity("NuTrello.Models.DbTaskModel", b =>
                 {
-                    b.HasOne("NuTrello.Models.DbListModel", "DbListsModel")
+                    b.HasOne("NuTrello.Models.DbListModel", "DbListModel")
                         .WithMany("Tasks")
-                        .HasForeignKey("DbListsModelId")
+                        .HasForeignKey("DbListModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
