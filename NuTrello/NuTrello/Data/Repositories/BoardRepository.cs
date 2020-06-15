@@ -1,23 +1,28 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using NuTrello.Data.Context;
 using NuTrello.Models;
-using System.Linq;
 
 namespace NuTrello.Data.Repository
 {
     public interface IBoardRepository
     {
         public int? InitializeNewBoard();
+        public List<BoardModel> GetBoards();
+        public BoardModel GetBoard(int boardId);
         public bool DeleteBoard(int boardId);
         public bool ModifyBoardInfo(int boardId, string param, string newValue);
     }
     public class BoardRepository : IBoardRepository
     {
         private readonly NuTrelloContext _context;
+
         public BoardRepository(NuTrelloContext context)
         {
             _context = context;
         }
+
         /// <summary>Initialize a new board.
         /// Returns the id of the new board if succeded.
         /// Returns null if failed.</summary>
@@ -63,6 +68,38 @@ namespace NuTrello.Data.Repository
         public bool ModifyBoardInfo(int boardId, string param, string newValue)
         {
             throw new NotImplementedException();
+        }
+
+
+        /// <summary>Method to get all boards from the database.
+        /// Returns a list of all boards.</summary>
+        public List<BoardModel> GetBoards()
+        {
+            try
+            {
+                List<BoardModel> boards = _context.Boards.ToList();
+                return (boards != null) ? boards : null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>Method to get a specific board from the database.
+        /// Returns the board if found.</summary>
+        /// <param name="boardId">The id of the board.</param>
+        public BoardModel GetBoard(int boardId)
+        {
+            try
+            {
+                BoardModel board = _context.Boards.First(b => b.Id == boardId);
+                return (board != null) ? board : null;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
