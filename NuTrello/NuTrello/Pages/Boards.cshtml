@@ -35,6 +35,7 @@
 
 
 <!-- Task Modal -->
+
 <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -51,14 +52,24 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
-        <button type="submit" class="btn btn-primary" onclick="@Model.insertTask()">Create Task</button>
+        <button type="submit" class="btn btn-primary" >Create Task</button>
         </a>
       </div>
     </div>
   </div>
 </div>
+ 
 
+
+ @* <form method="POST"> 
+   <input type ="text" asp-for="NewTaskCreated.Title" placeholder="Task Title">
+   <input type ="text" asp-for="NewTaskCreated.Description" placeholder="Description">
+
+  <button typ ="submit"> Create new task </button>
+ </form> *@
 <!-- List Modal -->
+
+
 <div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -71,10 +82,11 @@
       <div class="modal-body">
         <input type="text" placeholder="Enter Title">
       </div>
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
-        <button type="submit" class="btn btn-primary" onclick="@Model.insertTask()">Create List</button>
+        <button type="submit" class="btn btn-primary">Create List</button>
         </a>
       </div>
     </div>

@@ -1,0 +1,20 @@
+﻿ @* @page
+<link rel="stylesheet" href="~/css/boards.css" />
+@model NuTrello.Pages.BoardsModel
+@{
+    ViewData["Title"] = "Boards";
+}
+
+<h1>New task</h1>
+
+
+
+ <form method="POST"> 
+   <input type ="text" asp-for="NewTaskCreated.Title" placeholder="Task Title">
+   <input type ="text" asp-for="NewTaskCreated.Description" placeholder="Description">
+
+  <button typ ="submit"> Create new task </button>
+ </form>
+ * *
+
+ 
