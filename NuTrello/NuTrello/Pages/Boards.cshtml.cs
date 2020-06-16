@@ -13,11 +13,15 @@ namespace NuTrello.Pages
     
     public class BoardsModel : PageModel
     {
+        [BindProperty(SupportsGet = true)]
+        public int BoardId { get; set; }
+
         public List<string> lists= new List<string>(){"todo","doing","done"};
         public List<string> tasks= new List<string>(){"todo","todo","doing","todo","done","todo"};
+
+
         public void OnGet()
         {
-            System.Console.WriteLine("här är vi nu");
         }
 
         public string insertTask()
