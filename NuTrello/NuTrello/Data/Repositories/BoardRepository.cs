@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using NuTrello.Data.Context;
 using NuTrello.Models;
 
@@ -107,7 +108,10 @@ namespace NuTrello.Data.Repository
         {
             try
             {
-                DbBoardModel board = _context.Boards.FirstOrDefault(b => b.Id == boardId);
+                DbBoardModel board = _context.Boards
+                .Include(l => l.Lists)
+                .ThenInclude(t => t.Tasks)
+                .FirstOrDefault(b => b.Id == boardId);
                 return board;
             }
             catch
