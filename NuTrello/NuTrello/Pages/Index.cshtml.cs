@@ -8,40 +8,46 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 using NuTrello.Models;
+using NuTrello.Modelss.cs;
 using NuTrello.Data.Repository;
 
 namespace NuTrello.Pages
 {
     public class IndexModel : PageModel
     {
-
         // Här ska listan på bräden genereras om bräden finns
         // skall ta in alt. generera ett id som vi sedan appendar till boards ex. boards/{id}
 
-        //random variable to vizualise an existing board
-        //public List<string> boards =  new List<string>{"board one", "board two", "board three", "board four", "board five", "board six"};
+        private readonly IBoardRepository _boardRepo;
         public List<DbBoardModel> boards;
 
-        private readonly IBoardRepository _boardRepo;
-        private readonly IListRepository _listRepo;
-        private readonly ITaskRepository _taskRepo;
+        [BindProperty]
+        public CreateNewBoard newBoard { get; set; }
 
-        public string insertList()
-        {
-            return "Data has been saved";
-
-        }
-
-        public IndexModel(IBoardRepository boardRepository, IListRepository listRepository, ITaskRepository taskRepository)
+        public IndexModel(IBoardRepository boardRepository)
         {
             _boardRepo = boardRepository;
-            _listRepo = listRepository;
-            _taskRepo = taskRepository;
         }
 
         public void OnGet()
         {
+            // Get all boards from db
+            System.Console.WriteLine("Hej");
             boards = _boardRepo.GetBoards();
         }   
+
+        public IActionResult OnPostNewBoard()
+        {
+            // If a field is empty, redirect back to homepage.
+            if (string.IsNullOrEmpty(newBoard.Title) || string.IsNullOrEmpty(newBoard.Description)) 
+            {
+                return RedirectToPage("/Index");
+            }
+            // Init board to db and get new id
+            int newBoardId = (int)_boardRepo.InitializeNewBoard(newBoard.Title, newBoard.Description);
+
+            // Redirect to board page with the new id
+            return RedirectToPage("/Boards", new {boardId = newBoardId});
+        }
     }
 }
