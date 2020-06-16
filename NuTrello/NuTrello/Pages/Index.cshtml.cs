@@ -32,7 +32,6 @@ namespace NuTrello.Pages
         public void OnGet()
         {
             // Get all boards from db
-            System.Console.WriteLine("Hej");
             boards = _boardRepo.GetBoards();
         }   
 

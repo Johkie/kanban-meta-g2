@@ -8,7 +8,7 @@
 }
 
   <h1>Boards</h1>
-
+  
   <div class="render-list">
     @foreach (var list in @Model.board.Lists)
     {
@@ -19,14 +19,28 @@
         {
           <li class="list-group-item">@task.Title</li>
         }
-        <button data-toggle="modal" data-target="#taskModal">Create New Task</button>
+        <li class="collapse list-group-item" id="task-hidden-@list.Id" aria-hidden="true">
+            <form method="POST" asp-page-handler="CreateTask" asp-route-listId=@list.Id>
+              <div>
+                <input type="text" asp-for="NewTaskCreated.Title" placeholder="Enter Title">
+              </div>
+              <div>
+                <textarea style="width:100%; height:100px;" asp-for="NewTaskCreated.Description" placeholder="Enter Description"></textarea>
+              </div>
+              <div>
+                <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#task-hidden-@list.Id">Cancel</button>
+                <button type="submit" class="btn btn-primary" >Create Task</button>
+              </div>
+            </form>
+        </li>
       </ul>
+      <button type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
     </div>
   }
   <button data-toggle="modal" data-target="#listModal">Create New List</button>
   </div>
 
-<!-- Task Modal -->
+@* <!-- Task Modal -->
 <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -36,24 +50,23 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST">
+      <form method="POST" asp-page-handler="CreateTask" >
       <div class="modal-body">
         <input type="text" asp-for="NewTaskCreated.Title" placeholder="Enter Title">
         <textarea name="task-desc" style="width:300px; height:200;" asp-for="NewTaskCreated.Description" placeholder="Enter Description"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
         <button type="submit" class="btn btn-primary" >Create Task</button>
         </a>
       </div>
       </form>
     </div>
   </div>
-</div>
+</div> *@
  
-
-<form method="POST">
+<!-- List Modal -->
+<form method="POST" asp-page-handler="CreateList">
 <div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
