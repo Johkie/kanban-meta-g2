@@ -7,35 +7,26 @@
     ViewData["Title"] = "Boards";
 }
 
-<h1>Boards</h1>
+  <h1>Boards</h1>
 
   <div class="render-list">
-@* <ul class="list-group list-group-horizontal-md"> *@
-@foreach (var list in @Model.lists)
-{
-  @* <div class="list-item">@list</div> *@
-  <div class="task-items">
-  <label for="task-group">@list</label>
-  @* <li class="list-group-item" id="@list">@list</li> *@
-  <ul class="list-group task-group">
-  @foreach (var task in @Model.tasks)
-  {
-      if (list == task)
-      {     
-        <li class="list-group-item">@task</li>
-      }
-  }
+    @foreach (var list in @Model.board.Lists)
+    {
+      <div class="task-items">
+      <label for="task-group">@list.Title</label>
+      <ul class="list-group task-group">
+        @foreach (var task in list.Tasks)
+        {
+          <li class="list-group-item">@task.Title</li>
+        }
         <button data-toggle="modal" data-target="#taskModal">Create New Task</button>
-</ul>
+      </ul>
+    </div>
+  }
+  <button data-toggle="modal" data-target="#listModal">Create New List</button>
   </div>
-}
-<button data-toggle="modal" data-target="#listModal">Create New List</button>
-@* </ul> *@
-</div>
-
 
 <!-- Task Modal -->
-
 <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using NuTrello.Data.Context;
+
+using NuTrello.Data.Repository;
+using NuTrello.Models;
 using NuTrello.Modelss.cs;
 
 
@@ -15,18 +17,27 @@ namespace NuTrello.Pages
     //
     public class BoardsModel : PageModel
     {
+        private readonly IBoardRepository _boardRepository;
 
+        // ID of the board fetched from URL
         [BindProperty(SupportsGet = true)]
         public int BoardId { get; set; }
 
-        public List<string> lists = new List<string>() { "todo", "doing", "done" };
-        public List<string> tasks = new List<string>() { "todo", "todo", "doing", "todo", "done", "todo" };
+        // Current board
+        public DbBoardModel board { get; set; }
 
         [BindProperty]
         public CreateNewTask NewTaskCreated { get; set; }
 
         [BindProperty]
         public CreateNewList NewListCreated { get; set; }
+
+
+        public BoardsModel(IBoardRepository boardRepository)
+        {
+            _boardRepository = boardRepository;
+        }
+
 
         public IActionResult onPost()
         {
@@ -42,31 +53,9 @@ namespace NuTrello.Pages
 
         }
 
-        public string OnGet()
+        public void OnGet()
         {
-
-            return "klart";
-            //return _context.Lists.ToList();
+            board = _boardRepository.GetBoard(BoardId);
         }
-
-
-
-        public string insertList()
-        {
-            return "hej";
-        }
-
-        // public string insertTask(DbTaskModel task)
-        // {
-        //     _context.Tasks.Add(task);
-        // }
-
-        //   public AddNewTask(TaskRepository _taskRepository)
-        //   {
-        //       this.taskRepository = _taskRepository;
-        //   }
-
-        //   private readonly TaskRepository taskRepository;
-
     }
 }
