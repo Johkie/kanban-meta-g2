@@ -13,7 +13,7 @@
         @foreach (var board in Model.boards)
         {          
         <div class="board-btn">
-            <a id="@board.Id" asp-area="" asp-page="/Boards">
+            <a id="@board.Id" asp-area="" asp-page="/Boards" asp-route-boardId="@board.Id">
             <button> @board.Title</button>
             </a>
         </div>
