@@ -45,9 +45,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form method="POST">
       <div class="modal-body">
-        <input type="text" placeholder="Enter Title">
-        <textarea name="task-desc" style="width:300px; height:200;" placeholder="Enter Description"></textarea>
+        <input type="text" asp-for="NewTaskCreated.Title" placeholder="Enter Title">
+        <textarea name="task-desc" style="width:300px; height:200;" asp-for="NewTaskCreated.Description" placeholder="Enter Description"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -55,21 +56,13 @@
         <button type="submit" class="btn btn-primary" >Create Task</button>
         </a>
       </div>
+      </form>
     </div>
   </div>
 </div>
  
 
-
- @* <form method="POST"> 
-   <input type ="text" asp-for="NewTaskCreated.Title" placeholder="Task Title">
-   <input type ="text" asp-for="NewTaskCreated.Description" placeholder="Description">
-
-  <button typ ="submit"> Create new task </button>
- </form> *@
-<!-- List Modal -->
-
-
+<form method="POST">
 <div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -80,7 +73,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="text" placeholder="Enter Title">
+        <input type="text" asp-for="NewListCreated.ListName" placeholder="Enter Title">
       </div>
       
       <div class="modal-footer">
@@ -91,4 +84,5 @@
       </div>
     </div>
   </div>
+  </form>
 </div>
