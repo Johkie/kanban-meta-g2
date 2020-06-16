@@ -15,14 +15,6 @@ namespace NuTrello.Pages
     
     public class BoardsModel : PageModel
     {
-        private readonly NuTrelloContext _context;
-
-        public BoardsModel(NuTrelloContext context) => this._context = context;
-
-
-        public List<string> lists= new List<string>(){"todo","doing","done"};
-        public List<string> tasks= new List<string>(){"todo","todo","doing","todo","done","todo"};
-
         
         // public Task OnGet()
         // {
