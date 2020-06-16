@@ -30,13 +30,24 @@ namespace NuTrello.Data.Repository
         {
             try
             {
-                var board = new DbBoardModel { Title = title, Description = description };
+                // Create new board model
+                var board = new DbBoardModel 
+                { 
+                    Title = title, 
+                    Description = description 
+                
+                };
+
+                // Add board to db and save changes
                 _context.Boards.Add(board);
                 _context.SaveChanges();
+
+                // Return id of the new board
                 return board.Id;
             }
             catch
             {
+                // Return null if something went wrong
                 return null;
             }
         }
@@ -48,7 +59,10 @@ namespace NuTrello.Data.Repository
         {
             try
             {
-                var board = _context.Boards.First(b => b.Id == boardId);
+                // Get board from db based of id
+                var board = _context.Boards.FirstOrDefault(b => b.Id == boardId);
+
+                // Remove board from db and save changes
                 _context.Boards.Remove(board);
                 _context.SaveChanges();
 
@@ -78,7 +92,7 @@ namespace NuTrello.Data.Repository
             try
             {
                 List<DbBoardModel> boards = _context.Boards.ToList();
-                return (boards != null) ? boards : null;
+                return boards;
             }
             catch
             {
@@ -93,8 +107,8 @@ namespace NuTrello.Data.Repository
         {
             try
             {
-                DbBoardModel board = _context.Boards.First(b => b.Id == boardId);
-                return (board != null) ? board : null;
+                DbBoardModel board = _context.Boards.FirstOrDefault(b => b.Id == boardId);
+                return board;
             }
             catch
             {

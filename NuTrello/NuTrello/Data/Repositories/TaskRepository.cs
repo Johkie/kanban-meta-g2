@@ -7,9 +7,11 @@ namespace NuTrello.Data.Repository
 {
     public interface ITaskRepository
     {
-        public int? InitializeNewTask(int listId, string title, string desc);
-        public bool DeleteTask(int boardId);
-        public bool ModifyTaskInfo(int boardId, string param, string newValue);
+        int? InitializeNewTask(DbListModel listToAddTask, string title, string desc);
+        bool DeleteTask(int boardId);
+        DbTaskModel GetTask(int taskId);
+        bool MoveTaskToList(int taskId, DbListModel newList);
+        bool ModifyTaskInfo(int boardId, DbTaskModel modifiedTask);
     }
     public class TaskRepository : ITaskRepository
     {
@@ -25,21 +27,26 @@ namespace NuTrello.Data.Repository
          /// <param name="listId">The id of the list to add a task.</param>
          /// <param name="title">The title of the task.</param>
          /// <param name="desc">The description of the task.</param>
-        public int? InitializeNewTask(int listId, string title, string desc)
+        public int? InitializeNewTask(DbListModel listToAddTask, string title, string desc)
         {
             try
             {
-                // var task = new TaskModel { BoardListsModelId  Title = "MyBoard", Description = "Is a board" };
-                // _context.Boards.Add(board);
-                // _context.SaveChanges();
-                // return board.Id;
-                return null;
+                DbTaskModel task = new DbTaskModel 
+                { 
+                    Title = title, 
+                    Description = desc,
+                    DbListModel = listToAddTask,
+                    TaskOrder = listToAddTask.Tasks.Count() 
+                };
+
+                _context.Tasks.Add(task);
+                _context.SaveChanges();
+                return task.Id;
             }
             catch
             {
-                // return null;
+                return null;
             }
-            return null;
         }
 
         /// <summary>Method to delete a task based of id.
@@ -49,9 +56,12 @@ namespace NuTrello.Data.Repository
         {
             try
             {
-                // var board = _context.Boards.First(b => b.Id == boardId);
-                // _context.Boards.Remove(board);
-                // _context.SaveChanges();
+                // Get task from db based of id
+                var task = _context.Tasks.FirstOrDefault(t => t.Id == taskId);
+
+                // Remove task from db and save changes
+                _context.Tasks.Remove(task);
+                _context.SaveChanges();
 
                 return true;
             }
@@ -66,9 +76,43 @@ namespace NuTrello.Data.Repository
         /// <param name="boardId">The id of the board.</param>
         /// <param name="param">The board parameter to change.</param>
         /// <param name="newValue">The new value to set</param>
-        public bool ModifyTaskInfo(int boardId, string param, string newValue)
+        public bool ModifyTaskInfo(int taskId, DbTaskModel modifiedTask)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Get task from db based of id
+                var task = _context.Tasks.FirstOrDefault(t => t.Id == taskId);
+
+                // Update task and save changes
+                task = modifiedTask;
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>Method to move task to another list.
+        /// Returns true if succeded.</summary>
+        /// <param name="taskId">The task to change lists</param>
+        /// <param name="newList">The list to move the task into</param>
+        public bool MoveTaskToList(int taskId, DbListModel newList)
+        {
+            var task = _context.Tasks.FirstOrDefault(t => t.Id == taskId);
+            task.DbListModel = newList;
+            task.TaskOrder = newList.Tasks.Count();
+
+            _context.SaveChanges();
+            return true;
+        }
+
+        public DbTaskModel GetTask(int taskId)
+        {
+            var task = _context.Tasks.First(t => t.Id == taskId);
+            return task;
         }
     }
 }

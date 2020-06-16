@@ -13,8 +13,8 @@
         @foreach (var board in Model.boards)
         {          
         <div class="board-btn">
-            <a id="@board" asp-area="" asp-page="/Boards">
-            <button> @board</button>
+            <a id="@board.Id" asp-area="" asp-page="/Boards">
+            <button> @board.Title</button>
             </a>
         </div>
         }

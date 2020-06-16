@@ -9,6 +9,6 @@ namespace NuTrello.Models
         public int DbBoardsModelId { get; set; }
         public DbBoardModel DbBoardsModel { get; set; }
         public ICollection<DbTaskModel> Tasks { get; set; } = new List<DbTaskModel>();
-        public string Description { get; set; }
+        public string Title { get; set; }
     }
 }
