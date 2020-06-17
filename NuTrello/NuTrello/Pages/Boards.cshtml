@@ -7,17 +7,17 @@
     ViewData["Title"] = "Boards";
 }
 @* board-header - renders the title of the board and a collapseable description*@
-  <div class="board-header">
-  <h1 type="button" class="board-title"  data-toggle="collapse" data-target="#board-hidden-@Model.board.Id">@Model.board.Title</h1>
+<div class="board-header">
+    <h1 type="button" class="board-title" data-toggle="collapse" data-target="#board-hidden-@Model.board.Id">@Model.board.Title</h1>
     <div class="collapse board-desc" id="board-hidden-@Model.board.Id" aria-hidden="true">
-      <hr>
-        <div >
-          @Model.board.Description
+        <hr>
+        <div>
+            @Model.board.Description
         </div>
     </div>
-  </div> 
-  @*-----------------------------------------*@  
-  
+</div>
+@*-----------------------------------------*@
+
 
   @* Renders all the lists connected to the board*@
   <div class="render-list">
@@ -80,45 +80,67 @@
         @* Create task-button*@
           <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
         </div>
-      </div>
     }
 
-  @* create list button*@
-  <div>
-  <button class="create-list-btn btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#listModal">Add a List</button>
-  </div>
-  </div>
+    @* create list button*@
+    <div>
+        <button class="create-list-btn btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#listModal">Add a List</button>
+    </div>
+</div>
 
- 
+
 <!-- List Modal -->
 <div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="listModalLabel">Create New List</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="POST" asp-page-handler="CreateList">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="list-title">Title*</label>
-            <input type="text" id="list-title" class="form-control" asp-for="NewList.Title" placeholder="Enter Title" required>
-            <span class="text-danger" asp-validation-for="NewList.Title"></span>
-          </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="listModalLabel">Create New List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" asp-page-handler="CreateList">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="list-title">Title*</label>
+                        <input type="text" id="list-title" class="form-control" asp-for="NewList.Title" placeholder="Enter Title" required>
+                        <span class="text-danger" asp-validation-for="NewList.Title"></span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
+                        <button type="submit" class="btn btn-success">Create List</button>
+                    </a>
+                </div>
+            </form>
         </div>
-      
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
-          <button type="submit" class="btn btn-success">Create List</button>
-          </a>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
+
+<!-- Delete list modal -->
+<form method="POST" asp-page-handler=DeleteList asp-route-listId=@list.Id>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to delete this list?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <script type="text/javascript">
 
