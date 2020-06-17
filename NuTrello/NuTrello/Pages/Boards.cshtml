@@ -6,7 +6,7 @@
 @{
     ViewData["Title"] = "Boards";
 }
-
+@* board-header - renders the title of the board and a collapseable description*@
   <div class="board-header">
   <h1 type="button" class="board-title"  data-toggle="collapse" data-target="#board-hidden-@Model.board.Id">@Model.board.Title</h1>
     <div class="collapse board-desc" id="board-hidden-@Model.board.Id" aria-hidden="true">
@@ -17,6 +17,8 @@
     </div>
   </div>   
   
+
+  @* Renders all the lists connected to the board*@
   <div class="render-list">
     @foreach (var list in @Model.board.Lists)
     {
@@ -26,7 +28,8 @@
           <label class="list-title" for="task-group ">@list.Title</label>
           <span type="button" class="remove-list-btn" style="color:black">x</span>
         </div>
-
+        
+        @* Renders all the tasks connected to the lists and a collapseable div with task description and delete/edit buttons for each task*@
         <ul class="list-group task-group">
           @foreach (var task in list.Tasks)
           {           
@@ -64,12 +67,14 @@
                   </div>
                 </form>
             </li> 
-          @* --------- *@
         </ul>
+        
+        @* Create task-button*@
         <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
       </div>
     </div>
   }
+  @* create list button*@
   <div>
   <button class="create-list-btn btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#listModal">Add a List</button>
   </div>

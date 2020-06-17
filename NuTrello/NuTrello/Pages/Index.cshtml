@@ -5,12 +5,12 @@
     ViewData["Title"] = "Home page";
 }
 
-@* Content-diven för allt innehåll *@
+@* Render content*@
 <div class="index-content" style="display: flex; justify-content: center; margin-top: 7%;">
     <br>
     <div class="board-btns">
       
-    @* Om det finns boards i databasen så renderas de ut i "knappformat" *@
+    @* if there are boards, render them in "buttonformat"*@
     @if (Model.boards != null)
     {
         @foreach (var board in Model.boards)
@@ -21,9 +21,9 @@
         }
     }    
     </div>
-
     <br>
-</div>   
+</div>  
+@* Create-board button*@ 
     <div class ="addBoard" style="display: flex; justify-content: center; margin: 5%;">
         <button class="btn btn-primary btn-lg" weight="64" height="64" data-toggle="modal" data-target="#boardModal">Add a Board</button>
     </div>
