@@ -60,11 +60,10 @@ namespace NuTrello.Pages
 
         public IActionResult OnPostDeleteTask(int taskId)
         {
-                board = _boardRepository.GetBoard(BoardId);
+            // Remove task from db
             _taskRepository.DeleteTask(taskId);
 
             // Redirect to board page
-            return Page();
             return RedirectToPage("/Boards", new {boardId = BoardId});
         }
 
@@ -86,6 +85,7 @@ namespace NuTrello.Pages
 
         public void OnGet()
         {
+            // Get board from passed url boardid
             board = _boardRepository.GetBoard(BoardId);
         }
     }
