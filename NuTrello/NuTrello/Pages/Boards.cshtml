@@ -7,7 +7,15 @@
     ViewData["Title"] = "Boards";
 }
 
-  <h1>@Model.board.Title</h1>
+  <div class="board-header">
+  <h1 type="button" class="board-title"  data-toggle="collapse" data-target="#board-hidden-@Model.board.Id">@Model.board.Title</h1>
+    <div class="collapse board-desc" id="board-hidden-@Model.board.Id" aria-hidden="true">
+      <hr>
+        <div >
+          @Model.board.Description
+        </div>
+    </div>
+  </div>   
   
   <div class="render-list">
     @foreach (var list in @Model.board.Lists)
@@ -28,6 +36,10 @@
                 <hr>
                   <div>
                     @task.Description
+                    <div class="task-delete-btn">
+                      <button type="button" class="btn btn-success">Delete</button>
+                      <button type="button" class="btn btn-success" disabled>Edit</button>
+                    </div>
                   </div>
             </li> 
             </div>
