@@ -21,29 +21,37 @@
 
         <ul class="list-group task-group">
           @foreach (var task in list.Tasks)
-          {
-            <li class="list-group-item">@task.Title</li>
+          {           
+            <div class="list-group-item">
+            <li type="button" class="task-title"  data-toggle="collapse" data-target="#desc-hidden-@task.Id">@task.Title</li>
+            <li class="collapse task-desc" id="desc-hidden-@task.Id" aria-hidden="true">
+                <hr>
+                  <div>
+                    @task.Description
+                  </div>
+            </li> 
+            </div>
           }
           @* Create a task, collapsable inline *@
             <li class="collapse list-group-item" id="task-hidden-@list.Id" aria-hidden="true">
                 <form method="POST" asp-page-handler="CreateTask" asp-route-listId=@list.Id>
                   <div>
-                    <input type="text" asp-for="NewTaskCreated.Title" placeholder="Enter Title">
+                    <input type="text" asp-for="NewTaskCreated.Title" style="margin-bottom:2%;" placeholder="Required: Title">
                   </div>
 
                   <div>
-                    <textarea style="width:100%; height:100px;" asp-for="NewTaskCreated.Description" placeholder="Enter Description"></textarea>
+                    <textarea style="width:100%; height:100px;" asp-for="NewTaskCreated.Description" placeholder="Description"></textarea>
                   </div>
 
                   <div>
-                    <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#task-hidden-@list.Id">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#add-task-hidden-@list.Id">Cancel</button>
                     <button type="submit" class="btn btn-primary" >Create Task</button>
                   </div>
                 </form>
             </li> 
           @* --------- *@
         </ul>
-        <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
+        <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#add-task-hidden-@list.Id">Create New Task</button>
       </div>
     </div>
   }
@@ -55,17 +63,17 @@
  
 <!-- List Modal -->
 <form method="POST" asp-page-handler="CreateList">
-<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create New List</h5>
+        <h5 class="modal-title" id="listModalLabel">Create New List</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <input type="text" asp-for="NewListCreated.ListName" placeholder="Enter Title">
+        <input type="text" asp-for="NewListCreated.ListName" placeholder="List-name">
       </div>
       
       <div class="modal-footer">
