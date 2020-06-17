@@ -4,9 +4,9 @@ namespace NuTrello.Modelss.cs
 {
     public class CreateNewBoard 
     {
-        [Required]
+        [Required(ErrorMessage="Title is required")]
         public string Title { get; set; }   
-        [Required]
+
         public string Description { get; set; }
     }
 }
