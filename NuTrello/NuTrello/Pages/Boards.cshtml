@@ -15,7 +15,8 @@
           @Model.board.Description
         </div>
     </div>
-  </div>   
+  </div> 
+  @*-----------------------------------------*@  
   
 
   @* Renders all the lists connected to the board*@
@@ -29,7 +30,7 @@
           <span type="button" class="remove-list-btn" style="color:black">x</span>
         </div>
         
-        @* Renders all the tasks connected to the lists and a collapseable div with task description and delete/edit buttons for each task*@
+    @* Renders all the tasks connected to the lists and a collapseable div with task description and delete/edit buttons for each task*@
         <ul class="list-group task-group">
           @foreach (var task in list.Tasks)
           {           
@@ -47,7 +48,8 @@
             </li> 
             </div>
           }
-          @* Create a task, collapsable inline *@
+
+         @* Create a task, collapsable inline *@
             <li class="collapse list-group-item" id="task-hidden-@list.Id" aria-hidden="true">
                 <form method="POST" asp-page-handler="CreateTask" asp-route-listId=@list.Id>
                   <div class="form-group">
@@ -63,22 +65,24 @@
 
                   <div>
                     <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#task-hidden-@list.Id">Cancel</button>
-                    <button type="submit" class="btn btn-primary" >Create Task</button>
+                    <button type="submit" class="btn btn-success" >Create Task</button>
                   </div>
                 </form>
             </li> 
         </ul>
-        
+    
         @* Create task-button*@
-        <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
+          <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
+        </div>
       </div>
-    </div>
-  }
+    }
+
   @* create list button*@
   <div>
   <button class="create-list-btn btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#listModal">Add a List</button>
   </div>
   </div>
+
  
 <!-- List Modal -->
 <div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
@@ -102,7 +106,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
-          <button type="submit" class="btn btn-primary">Create List</button>
+          <button type="submit" class="btn btn-success">Create List</button>
           </a>
         </div>
       </form>
