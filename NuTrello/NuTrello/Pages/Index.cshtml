@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="index-content" style="display: flex; justify-content: center; align-items: center; margin-top: 7%;">
+<div class="index-content" style="display: flex; justify-content: center; margin-top: 7%;">
     <br>
     <div class="board-btns">
     @if (Model.boards != null)
@@ -21,7 +21,7 @@
 
     <br>
 </div>   
-    <div class ="addBoard" style="display: flex; justify-content: center; align-items: center; margin: 5%;">
+    <div class ="addBoard" style="display: flex; justify-content: center; margin: 5%;">
         <button class="btn btn-primary btn-lg" weight="64" height="64" data-toggle="modal" data-target="#boardModal">Add a Board</button>
     </div>
 
@@ -37,17 +37,20 @@
         </button>
       </div>
       
-      <form method="post" asp-page-handler="NewBoard">
+      <form method="POST" asp-page-handler="NewBoard">
+
         <div class="modal-body">
           <input type="text" asp-for="newBoard.Title" placeholder="Enter Title">
           <textarea asp-for="newBoard.Description" style="width:300px; height:200;" placeholder="Enter Description"></textarea>
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
           <button type="submit" class="btn btn-primary">Create Board</button>
           </a>
         </div>
+
       </form>
 
     </div>

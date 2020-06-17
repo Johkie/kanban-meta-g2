@@ -2,11 +2,18 @@
 .render-list{
 display: flex;
 justify-content: flex-start;
+flex-wrap: wrap;
 }
 
 .content-bg{
     border-radius: 2px;
     background-color: rgba(119, 119, 119, 0.151);
+    margin-bottom: 5%;
+}
+
+.list-title-div{
+    display: flex;
+    justify-content: space-between;
 }
 .list-title{
     margin: 3%;
@@ -16,6 +23,9 @@ justify-content: flex-start;
     font-size: 18px;
     font-weight: bold;
 }
+.remove-list-btn{
+    margin-right: 2%;
+}
 
 .list-group-item{
     margin: 3%;
@@ -24,4 +34,10 @@ justify-content: flex-start;
 .create-task-btn{
     margin: 3%;
     width: 94%;
+}
+
+.remove-list-btn{
+    display: flex;
+    align-self: end;
+    font-size: larger;
 }
