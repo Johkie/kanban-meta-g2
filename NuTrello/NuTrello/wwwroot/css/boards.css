@@ -1,10 +1,17 @@
+/*
+    MAIN
+*/
 
-.render-list{
-display: flex;
-justify-content: flex-start;
-flex-wrap: wrap;
+.render-list {
+    display: flex;
+    justify-content: flex-start;
 }
+/*
+    LISTOR
+*/
 
+.content-bg {
+=======
 .board-header{
     margin-bottom: 5%;
 }
@@ -14,18 +21,23 @@ flex-wrap: wrap;
 .board-desc div{
     margin-left: 3%;
 }
-    
+
+
 .content-bg{
     border-radius: 2px;
     background-color: rgba(119, 119, 119, 0.151);
     margin-bottom: 5%;
+    height: 700px;
 }
 
-.list-title-div{
+/*Titel*/
+
+.list-title-div {
     display: flex;
     justify-content: space-between;
 }
-.list-title{
+
+.list-title {
     display: flex;
     justify-content: center;
     margin-left: 8%;
@@ -33,32 +45,48 @@ flex-wrap: wrap;
     font-size: 20px;
     font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
 }
-.remove-list-btn{
+
+.remove-list-btn {
     margin-right: 4%;
+    border: none;
 }
 
-.list-group-item{
+.create-list-btn {
+    width: 7em;
+}
+
+/*
+    TASKS
+*/
+
+/*En task*/
+.list-group-item {
     margin: 3%;
 }
 
-.create-task-btn{
+.create-task-btn {
     margin: 3%;
     width: 94%;
 }
 
-.task-title{
+.task-title {
     font-size: 16px;
+    list-style-type: none;
+    background-color: white;
+    ;
 }
 
-.task-desc{
+.task-desc {
     list-style-type: none;
     margin-top: 3%;
 }
-.task-desc div{
+
+.task-desc div {
     list-style-type: none;
     margin-top: 3%;
     margin-left: 8%;
 }
+
 .remove-list-btn{
     display: flex;
     align-self: end;
