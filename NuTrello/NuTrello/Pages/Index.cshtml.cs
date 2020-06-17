@@ -37,8 +37,8 @@ namespace NuTrello.Pages
 
         public IActionResult OnPostNewBoard()
         {
-            // If a field is empty, redirect back to homepage.
-            if (string.IsNullOrEmpty(newBoard.Title) || string.IsNullOrEmpty(newBoard.Description)) 
+            // If title is empty, redirect back to homepage.
+            if (string.IsNullOrEmpty(newBoard.Title)) 
             {
                 return RedirectToPage("/Index");
             }

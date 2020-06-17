@@ -43,8 +43,8 @@ namespace NuTrello.Pages
 
         public IActionResult OnPostCreateTask(int listId)
         {
-            // If both fields has been filled, post new task
-            if(!string.IsNullOrEmpty(NewTaskCreated.Title) && !string.IsNullOrEmpty(NewTaskCreated.Description))
+            // If title field has been filled, post new task
+            if(!string.IsNullOrEmpty(NewTaskCreated.Title))
             {
                 // Get current board
                 board = _boardRepository.GetBoard(BoardId);
