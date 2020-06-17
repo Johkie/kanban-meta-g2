@@ -45,7 +45,7 @@
             </div>
           }
           @* Create a task, collapsable inline *@
-            <li class="collapse list-group-item" id="task-hidden-@list.Id" aria-hidden="true">
+            <li class="collapse list-group-item create-task" id="task-hidden-@list.Id" aria-hidden="true">
                 <form method="POST" asp-page-handler="CreateTask" asp-route-listId=@list.Id>
                   <div class="form-group">
                     <label for="task-title">Title*</label>
@@ -112,7 +112,7 @@
   });
 
 // Clear data in new task when collapse
-  $('.collapse').on('hidden.bs.collapse', function () {
+  $('.create-task').on('hidden.bs.collapse', function () {
     $(this).find('form')[0].reset();
   })
 </script>
