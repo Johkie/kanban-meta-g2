@@ -32,7 +32,7 @@ namespace NuTrello.Pages
         public CreateNewTask NewTaskCreated { get; set; }
 
         [BindProperty]
-        public CreateNewList NewListCreated { get; set; }
+        public CreateNewList NewList { get; set; }
 
         public BoardsModel(IBoardRepository boardRepository, IListRepository listRepository, ITaskRepository taskRepository)
         {
@@ -61,13 +61,13 @@ namespace NuTrello.Pages
         public IActionResult OnPostCreateList()
         {
             // If field is filled, post new list
-            if(!string.IsNullOrEmpty(NewListCreated.ListName))
+            if(!string.IsNullOrEmpty(NewList.Title))
             {
                 // Get current board
                 board = _boardRepository.GetBoard(BoardId);
 
                 // Create new list on board
-                _listRepository.InitializeNewList(board, NewListCreated.ListName);
+                _listRepository.InitializeNewList(board, NewList.Title);
             }
 
             // Redirect to board page
