@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using NuTrello.Data.Context;
+
+using NuTrello.Data.Repository;
+using NuTrello.Models;
 using NuTrello.Modelss.cs;
 using NuTrello.Data.Repository;
 
@@ -15,12 +17,14 @@ namespace NuTrello.Pages
     // Här vill vi ha all information om brädet(id) som vi valt att visa
     public class BoardsModel : PageModel
     {
+        private readonly IBoardRepository _boardRepository;
 
+        // ID of the board fetched from URL
         [BindProperty(SupportsGet = true)]
         public int BoardId { get; set; }
 
-        public List<string> lists = new List<string>() { "todo", "doing", "done" };
-        public List<string> tasks = new List<string>() { "todo", "todo", "doing", "todo", "done", "todo" };
+        // Current board
+        public DbBoardModel board { get; set; }
 
         [BindProperty]
         public CreateNewTask NewTaskCreated { get; set; }
@@ -34,6 +38,12 @@ namespace NuTrello.Pages
         }
 
         private readonly TaskRepository taskRepository;
+
+
+        public BoardsModel(IBoardRepository boardRepository)
+        {
+            _boardRepository = boardRepository;
+        }
 
         public IActionResult onPost()
         {
@@ -52,6 +62,7 @@ namespace NuTrello.Pages
         }
 
         public void OnGet()
+
         {
 
             // GetLists = this.taskRepository.GetTask();
@@ -61,16 +72,16 @@ namespace NuTrello.Pages
 
 
         public string insertList()
+
         {
-            return "hej";
+            board = _boardRepository.GetBoard(BoardId);
         }
+
 
         // public string insertTask(DbTaskModel task)
         // {
         //     _context.Tasks.Add(task);
         // }
-
-
 
     }
 }
