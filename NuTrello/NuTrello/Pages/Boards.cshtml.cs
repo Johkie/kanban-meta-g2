@@ -35,6 +35,9 @@ namespace NuTrello.Pages
         public CreateNewList NewList { get; set; }
 
         [BindProperty]
+        public DeleteList DeleteList { get; set; }
+
+        [BindProperty]
         public MoveTaskToList MoveTask { get; set; }
 
 
@@ -48,7 +51,7 @@ namespace NuTrello.Pages
         public IActionResult OnPostCreateTask(int listId)
         {
             // If title field has been filled, post new task
-            if(!string.IsNullOrEmpty(NewTask.Title))
+            if (!string.IsNullOrEmpty(NewTask.Title))
             {
                 // Get current board
                 board = _boardRepository.GetBoard(BoardId);
@@ -59,13 +62,16 @@ namespace NuTrello.Pages
             }
 
             // Redirect to board page
-            return RedirectToPage("/Boards", new {boardId = BoardId});
+            return RedirectToPage("/Boards", new { boardId = BoardId });
         }
 
-        public IActionResult OnPostDeleteList(int listId)
+        public IActionResult OnPostDeleteList()
         {
             // Remove list
-            _listRepository.DeleteList(listId);
+            if (DeleteList.ListId != 0)
+            {
+                _listRepository.DeleteList(DeleteList.ListId);
+            }
 
             // Redirect to board page
             return RedirectToPage("/Boards", new { boardId = BoardId });
@@ -77,13 +83,13 @@ namespace NuTrello.Pages
             _taskRepository.DeleteTask(taskId);
 
             // Redirect to board page
-            return RedirectToPage("/Boards", new {boardId = BoardId});
+            return RedirectToPage("/Boards", new { boardId = BoardId });
         }
 
         public IActionResult OnPostCreateList()
         {
             // If field is filled, post new list
-            if(!string.IsNullOrEmpty(NewList.Title))
+            if (!string.IsNullOrEmpty(NewList.Title))
             {
                 // Get current board
                 board = _boardRepository.GetBoard(BoardId);
@@ -93,12 +99,12 @@ namespace NuTrello.Pages
             }
 
             // Redirect to board page
-            return RedirectToPage("/Boards", new {boardId = BoardId});
+            return RedirectToPage("/Boards", new { boardId = BoardId });
         }
 
         public IActionResult OnPostMoveTaskToList()
         {
-            if(MoveTask.TaskId > 0 && MoveTask.ListId > 0)
+            if (MoveTask.TaskId > 0 && MoveTask.ListId > 0)
             {
                 // Get list to place the task
                 var newList = _listRepository.GetList(MoveTask.ListId);
@@ -106,9 +112,9 @@ namespace NuTrello.Pages
                 // Move task to the new list
                 _taskRepository.MoveTaskToList(MoveTask.TaskId, newList);
             }
-            
+
             // Redirect back to boardpage
-            return RedirectToPage("/Boards", new {boardId = BoardId});
+            return RedirectToPage("/Boards", new { boardId = BoardId });
         }
 
         public void OnGet()

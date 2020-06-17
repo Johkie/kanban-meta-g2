@@ -32,7 +32,7 @@
       <div class="content-bg task-container" ondragover="onDragOverList(event)" ondrop="onDropOverListSetId(@list.Id)">
         <div class="list-title-div">
           <label class="list-title" for="task-group ">@list.Title</label>
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">X</button>
+          <button type="button" class="btn btn-danger" data-toggle="modal" onclick="deleteListBtn(@list.Id)" data-target="#deleteModal">X</button>
         </div>
         
     @* Renders all the tasks connected to the lists and a collapseable div with task description and delete/edit buttons for each task*@
@@ -121,7 +121,9 @@
 </div>
 
 <!-- Delete list modal -->
-<form method="POST" asp-page-handler=DeleteList asp-route-listId=2>
+<form method="POST" asp-page-handler=DeleteList>
+    <input type="hidden" id="list-delete-Id" asp-for="DeleteList.ListId">
+    <input type="submit" id="list-delete-button" hidden  value="">
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -154,6 +156,21 @@
   $('.create-task').on('hidden.bs.collapse', function () {
     $(this).find('form')[0].reset();
   })
+
+
+//Functions for deleting lists
+
+function deleteListBtn(listId){
+    $("#list-delete-Id").val(listId);
+}
+
+function onListDelete(){
+  
+  if($('#list-delete-Id') != 0 ){
+    $("#list-delete-button").click();
+  }
+  $('#list-delete-Id').val("");
+}
 
 // Functions for drag and drop event that sets and remove data that's later being sent to form handler
 function onTaskDragStart(taskId) {
