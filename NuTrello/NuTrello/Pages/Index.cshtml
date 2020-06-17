@@ -1,32 +1,32 @@
 ﻿@page "{handler?}"
-@model IndexModel
 <link rel="stylesheet" href="~/css/index.css" />
+@model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-primary text-center">
+<div class="index-content" style="display: flex; justify-content: center; align-items: center; margin-top: 7%;">
     <br>
-    <div class="boards-list">
+    <div class="board-btns">
     @if (Model.boards != null)
     {
         @foreach (var board in Model.boards)
         {          
-        <div class="board-btn">
-            <a id="@board.Id" asp-area="" asp-page="/Boards" asp-route-boardId="@board.Id">
-            <button> @board.Title</button>
-            </a>
+        <div class="btn-group ">   
+            <a id="@board.Id" style="text-decoration: none" asp-area="" asp-page="/Boards" asp-route-boardId="@board.Id" class="btn btn-outline-dark btn-lg btn-block">@board.Title</a>
         </div>
         }
-    }
-    </div>
-    <div class ="addBoard">
-        <h1>Board</h1>
-        @* <a class="nav-link text-dark" asp-area="" asp-page="/Boards"> *@
-        <img src="~/img/plus-circle-solid.svg" weight="64" height="64" data-toggle="modal" data-target="#boardModal" />
+    }    
     </div>
 
-<!-- Modal -->
+    <br>
+</div>   
+    <div class ="addBoard" style="display: flex; justify-content: center; align-items: center; margin: 5%;">
+        <button class="btn btn-primary btn-lg" weight="64" height="64" data-toggle="modal" data-target="#boardModal">Add a Board</button>
+    </div>
+
+
+<!-- boardModal -->
 <div class="modal fade" id="boardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
