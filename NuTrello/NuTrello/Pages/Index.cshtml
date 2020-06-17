@@ -4,9 +4,12 @@
     ViewData["Title"] = "Home page";
 }
 
+@* Content-diven för allt innehåll *@
 <div class="index-content" style="display: flex; justify-content: center; margin-top: 7%;">
     <br>
     <div class="board-btns">
+
+      @* Om det finns boards i databasen så renderas de ut i "knappformat" *@
     @if (Model.boards != null)
     {
         @foreach (var board in Model.boards)
