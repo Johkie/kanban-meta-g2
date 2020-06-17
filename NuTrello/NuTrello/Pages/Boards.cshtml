@@ -7,19 +7,36 @@
     ViewData["Title"] = "Boards";
 }
 
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+</script>
+
   <h1>@Model.board.Title</h1>
   
   <div class="render-list">
     @foreach (var list in @Model.board.Lists)
     {
-    <div class="render-content col-lg-3 " >
-      <div class="content-bg">
-        <div class="list-title-div">
+    <div class="render-content col-lg-3 " ondrop="drop(event)" ondragover="allowDrop(event)">
+      <div class="content-bg" draggable="true" ondragstart="drag(event)" id="drag1">
+        <div class="list-title-div" >
           <label class="list-title" for="task-group ">@list.Title</label>
           <span type="button" class="remove-list-btn" style="color:black">x</span>
-        </div>
+          
+        </div >
 
-        <ul class="list-group task-group">
+        <ul class="list-group task-group" ondrop="drop(event)" ondragover="allowDrop(event)">
           @foreach (var task in list.Tasks)
           {
             <li class="list-group-item">@task.Title</li>
