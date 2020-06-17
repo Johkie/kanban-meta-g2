@@ -21,10 +21,15 @@
 
   @* Renders all the lists connected to the board*@
   <div class="render-list">
+    <form method="POST" asp-page-handler="MoveTaskToList">
+      <input id="task-change-id" type="hidden" asp-for="MoveTask.TaskId" value="">
+      <input id="list-change-id" type="hidden" asp-for="MoveTask.ListId" value="">
+      <button id="submit-task-list-change" type="submit" hidden></button>
+    </form>
     @foreach (var list in @Model.board.Lists)
     {
-    <div class="render-content col-lg-3 " >
-      <div class="content-bg">
+    <div class="render-content col-lg-3">
+      <div class="content-bg task-container" ondragover="onDragOverList(event)" ondrop="onDropOverListSetId(@list.Id)">
         <div class="list-title-div">
           <label class="list-title" for="task-group ">@list.Title</label>
           <span type="button" class="remove-list-btn" style="color:black">x</span>
@@ -34,8 +39,8 @@
         <ul class="list-group task-group">
           @foreach (var task in list.Tasks)
           {           
-            <div class="list-group-item">
-            <li type="button" class="task-title"  data-toggle="collapse" data-target="#desc-hidden-@task.Id">@task.Title</li>
+            <div class="list-group-item drag-item" draggable="true" ondragstart="onTaskDragStart(@task.Id)" ondragend="onTaskDragEnd(event)">
+            <li type="button" class="task-title" data-toggle="collapse" data-target="#desc-hidden-@task.Id">@task.Title</li>
             <li class="collapse task-desc" id="desc-hidden-@task.Id" aria-hidden="true">
                 <hr>
                   <div>
@@ -72,7 +77,6 @@
                 </form>
             </li> 
         </ul>
-    
         @* Create task-button*@
           <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
         </div>
@@ -117,6 +121,7 @@
 </div>
 
 <script type="text/javascript">
+
   // Clear data in list modal when hidden
   $('#listModal').on('hidden.bs.modal', function(){
     $(this).find('form')[0].reset();
@@ -126,6 +131,39 @@
   $('.create-task').on('hidden.bs.collapse', function () {
     $(this).find('form')[0].reset();
   })
+
+// Functions for drag and drop event that sets and remove data that's later being sent to form handler
+function onTaskDragStart(taskId) {
+
+  // Set taskid when a task is dropped
+  $('#task-change-id').val(taskId);
+}
+
+function onTaskDragEnd(event) {
+
+  // Get current values  
+  var taskId = $('#task-change-id').val();
+  var listId = $('#list-change-id').val();
+
+  // If there are values, send form with data
+  if (taskId != 0 && listId != 0) {
+    $('#submit-task-list-change').click();
+  }
+
+  // Reset values
+  $('#task-change-id').val("");
+  $('#list-change-id').val("");
+}
+
+function onDragOverList(e) {
+  e.preventDefault();
+}
+
+function onDropOverListSetId(listId) {
+  $('#list-change-id').val(listId);
+}
+
+
 </script>
 
 @section scripts{

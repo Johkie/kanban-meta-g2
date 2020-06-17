@@ -34,6 +34,10 @@ namespace NuTrello.Pages
         [BindProperty]
         public CreateNewList NewList { get; set; }
 
+        [BindProperty]
+        public MoveTaskToList MoveTask { get; set; }
+
+
         public BoardsModel(IBoardRepository boardRepository, IListRepository listRepository, ITaskRepository taskRepository)
         {
             _boardRepository = boardRepository;
@@ -80,6 +84,21 @@ namespace NuTrello.Pages
             }
 
             // Redirect to board page
+            return RedirectToPage("/Boards", new {boardId = BoardId});
+        }
+
+        public IActionResult OnPostMoveTaskToList()
+        {
+            if(MoveTask.TaskId > 0 && MoveTask.ListId > 0)
+            {
+                // Get list to place the task
+                var newList = _listRepository.GetList(MoveTask.ListId);
+
+                // Move task to the new list
+                _taskRepository.MoveTaskToList(MoveTask.TaskId, newList);
+            }
+            
+            // Redirect back to boardpage
             return RedirectToPage("/Boards", new {boardId = BoardId});
         }
 
