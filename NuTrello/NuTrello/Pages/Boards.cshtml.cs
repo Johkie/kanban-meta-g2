@@ -29,10 +29,10 @@ namespace NuTrello.Pages
         public DbBoardModel board { get; set; } = new DbBoardModel();
 
         [BindProperty]
-        public CreateNewTask NewTaskCreated { get; set; }
+        public CreateNewTask NewTask { get; set; }
 
         [BindProperty]
-        public CreateNewList NewListCreated { get; set; }
+        public CreateNewList NewList { get; set; }
 
         public BoardsModel(IBoardRepository boardRepository, IListRepository listRepository, ITaskRepository taskRepository)
         {
@@ -43,15 +43,15 @@ namespace NuTrello.Pages
 
         public IActionResult OnPostCreateTask(int listId)
         {
-            // If both fields has been filled, post new task
-            if(!string.IsNullOrEmpty(NewTaskCreated.Title) && !string.IsNullOrEmpty(NewTaskCreated.Description))
+            // If title field has been filled, post new task
+            if(!string.IsNullOrEmpty(NewTask.Title))
             {
                 // Get current board
                 board = _boardRepository.GetBoard(BoardId);
 
                 // Find matching list and post the new task on it.
                 DbListModel list = board.Lists.First(l => l.Id == listId);
-                _taskRepository.InitializeNewTask(list, NewTaskCreated.Title, NewTaskCreated.Description);
+                _taskRepository.InitializeNewTask(list, NewTask.Title, NewTask.Description);
             }
 
             // Redirect to board page
@@ -61,13 +61,13 @@ namespace NuTrello.Pages
         public IActionResult OnPostCreateList()
         {
             // If field is filled, post new list
-            if(!string.IsNullOrEmpty(NewListCreated.ListName))
+            if(!string.IsNullOrEmpty(NewList.Title))
             {
                 // Get current board
                 board = _boardRepository.GetBoard(BoardId);
 
                 // Create new list on board
-                _listRepository.InitializeNewList(board, NewListCreated.ListName);
+                _listRepository.InitializeNewList(board, NewList.Title);
             }
 
             // Redirect to board page
