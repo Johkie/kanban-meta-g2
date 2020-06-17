@@ -1,5 +1,4 @@
 ﻿@page "{handler?}"
-<link rel="stylesheet" href="~/css/index.css" />
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -27,11 +26,11 @@
 
 
 <!-- boardModal -->
-<div class="modal fade" id="boardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="boardModal" tabindex="-1" role="dialog" aria-labelledby="boardModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create New Board</h5>
+        <h5 class="modal-title" id="boardModalLabel">Create New Board</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -40,8 +39,8 @@
       <form method="POST" asp-page-handler="NewBoard">
 
         <div class="modal-body">
-          <input type="text" asp-for="newBoard.Title" placeholder="Enter Title">
-          <textarea asp-for="newBoard.Description" style="width:300px; height:200;" placeholder="Enter Description"></textarea>
+          <input type="text" asp-for="newBoard.Title" style="margin-bottom:2%;" placeholder="Required: Enter Title">
+          <textarea asp-for="newBoard.Description" style="width:300px; height:200;" placeholder="Required: Enter Description"></textarea>
         </div>
 
         <div class="modal-footer">
