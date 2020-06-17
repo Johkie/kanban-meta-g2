@@ -2,13 +2,13 @@
 .render-list{
 display: flex;
 justify-content: flex-start;
-flex-wrap: wrap;
 }
 
 .content-bg{
     border-radius: 2px;
     background-color: rgba(119, 119, 119, 0.151);
     margin-bottom: 5%;
+    height: 700px;
 }
 
 .list-title-div{
@@ -25,6 +25,7 @@ flex-wrap: wrap;
 }
 .remove-list-btn{
     margin-right: 4%;
+    border: none;
 }
 
 .list-group-item{
@@ -35,9 +36,13 @@ flex-wrap: wrap;
     margin: 3%;
     width: 94%;
 }
-
+.create-list-btn{
+    width: 7em;
+}
 .task-title{
     font-size: 16px;
+    list-style-type: none;
+    background-color: white;;
 }
 
 .task-desc{
