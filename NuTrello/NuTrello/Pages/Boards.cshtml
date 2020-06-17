@@ -7,18 +7,20 @@
     ViewData["Title"] = "Boards";
 }
 
-  <h1>Boards</h1>
+  <h1>@Model.board.Title</h1>
   
   <div class="render-list">
     @foreach (var list in @Model.board.Lists)
     {
-      <div class="task-items">
-      <label for="task-group">@list.Title</label>
+    <div class="render-content col-md-3 " >
+      <div class="content-bg">
+      <label class="list-title" for="task-group ">@list.Title</label>
       <ul class="list-group task-group">
         @foreach (var task in list.Tasks)
         {
           <li class="list-group-item">@task.Title</li>
         }
+        @* Create a task, collapsable inline *@
         <li class="collapse list-group-item" id="task-hidden-@list.Id" aria-hidden="true">
             <form method="POST" asp-page-handler="CreateTask" asp-route-listId=@list.Id>
               <div>
@@ -32,38 +34,19 @@
                 <button type="submit" class="btn btn-primary" >Create Task</button>
               </div>
             </form>
-        </li>
+        </li> 
+
+        @* --------- *@
       </ul>
-      <button type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
+      <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
+      </div>
     </div>
   }
-  <button data-toggle="modal" data-target="#listModal">Create New List</button>
+  <div>
+  <button class="create-list-btn btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#listModal">Add a List</button>
+  </div>
   </div>
 
-@* <!-- Task Modal -->
-<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create New Task</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="POST" asp-page-handler="CreateTask" >
-      <div class="modal-body">
-        <input type="text" asp-for="NewTaskCreated.Title" placeholder="Enter Title">
-        <textarea name="task-desc" style="width:300px; height:200;" asp-for="NewTaskCreated.Description" placeholder="Enter Description"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary" >Create Task</button>
-        </a>
-      </div>
-      </form>
-    </div>
-  </div>
-</div> *@
  
 <!-- List Modal -->
 <form method="POST" asp-page-handler="CreateList">
