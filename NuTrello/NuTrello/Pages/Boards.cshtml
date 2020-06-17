@@ -32,7 +32,7 @@
       <div class="content-bg task-container" ondragover="onDragOverList(event)" ondrop="onDropOverListSetId(@list.Id)">
         <div class="list-title-div">
           <label class="list-title" for="task-group ">@list.Title</label>
-          <span type="button" class="remove-list-btn" style="color:black">x</span>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">X</button>
         </div>
         
     @* Renders all the tasks connected to the lists and a collapseable div with task description and delete/edit buttons for each task*@
@@ -80,6 +80,7 @@
         @* Create task-button*@
           <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
         </div>
+      </div>
     }
 
     @* create list button*@
@@ -120,7 +121,7 @@
 </div>
 
 <!-- Delete list modal -->
-<form method="POST" asp-page-handler=DeleteList asp-route-listId=@list.Id>
+<form method="POST" asp-page-handler=DeleteList asp-route-listId=2>
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
