@@ -58,6 +58,15 @@ namespace NuTrello.Pages
             return RedirectToPage("/Boards", new {boardId = BoardId});
         }
 
+        public IActionResult OnPostDeleteList(int listId)
+        {
+            // Remove list
+            _listRepository.DeleteList(listId);
+
+            // Redirect to board page
+            return RedirectToPage("/Boards", new { boardId = BoardId });
+        }
+
         public IActionResult OnPostDeleteTask(int taskId)
         {
             // Remove task from db
