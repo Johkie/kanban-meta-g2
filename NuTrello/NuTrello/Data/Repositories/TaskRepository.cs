@@ -2,6 +2,7 @@ using System;
 using NuTrello.Data.Context;
 using NuTrello.Models;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace NuTrello.Data.Repository
 {
@@ -101,12 +102,21 @@ namespace NuTrello.Data.Repository
         /// <param name="newList">The list to move the task into</param>
         public bool MoveTaskToList(int taskId, DbListModel newList)
         {
-            var task = _context.Tasks.FirstOrDefault(t => t.Id == taskId);
-            task.DbListModel = newList;
-            task.TaskOrder = newList.Tasks.Count();
+            var task = _context.Tasks
+            .Include(t => t.DbListModel)
+            .FirstOrDefault(t => t.Id == taskId);
 
-            _context.SaveChanges();
-            return true;
+            // Only update list if its not task current list
+            if(task.DbListModel.Id != newList.Id) 
+            {
+                task.DbListModel = newList;
+                task.TaskOrder = newList.Tasks.Count();
+
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
         public DbTaskModel GetTask(int taskId)
