@@ -18,13 +18,15 @@ namespace NuTrello.Pages
     public class BoardsModel : PageModel
     {
         private readonly IBoardRepository _boardRepository;
+        private readonly IListRepository _listRepository;
+        private readonly ITaskRepository _taskRepository;
 
         // ID of the board fetched from URL
         [BindProperty(SupportsGet = true)]
         public int BoardId { get; set; }
 
         // Current board
-        public DbBoardModel board { get; set; }
+        public DbBoardModel board { get; set; } = new DbBoardModel();
 
         [BindProperty]
         public CreateNewTask NewTaskCreated { get; set; }
@@ -32,25 +34,44 @@ namespace NuTrello.Pages
         [BindProperty]
         public CreateNewList NewListCreated { get; set; }
 
-
-        public BoardsModel(IBoardRepository boardRepository)
+        public BoardsModel(IBoardRepository boardRepository, IListRepository listRepository, ITaskRepository taskRepository)
         {
             _boardRepository = boardRepository;
+            _listRepository = listRepository;
+            _taskRepository = taskRepository;
         }
 
-
-        public IActionResult onPost()
+        public IActionResult OnPostCreateTask(int listId)
         {
-            if (ModelState.IsValid == false)
+            // If both fields has been filled, post new task
+            if(!string.IsNullOrEmpty(NewTaskCreated.Title) && !string.IsNullOrEmpty(NewTaskCreated.Description))
             {
-                // taskRepository.InitializeNewTask(DbListModel listToAddTask, string title, string desc)
-                //   lists.Add(NewTaskCreated.Title);
+                // Get current board
+                board = _boardRepository.GetBoard(BoardId);
 
-                return Page();
+                // Find matching list and post the new task on it.
+                DbListModel list = board.Lists.First(l => l.Id == listId);
+                _taskRepository.InitializeNewTask(list, NewTaskCreated.Title, NewTaskCreated.Description);
             }
 
-            return RedirectToPage("./Index");
+            // Redirect to board page
+            return RedirectToPage("/Boards", new {boardId = BoardId});
+        }
 
+        public IActionResult OnPostCreateList()
+        {
+            // If field is filled, post new list
+            if(!string.IsNullOrEmpty(NewListCreated.ListName))
+            {
+                // Get current board
+                board = _boardRepository.GetBoard(BoardId);
+
+                // Create new list on board
+                _listRepository.InitializeNewList(board, NewListCreated.ListName);
+            }
+
+            // Redirect to board page
+            return RedirectToPage("/Boards", new {boardId = BoardId});
         }
 
         public void OnGet()
