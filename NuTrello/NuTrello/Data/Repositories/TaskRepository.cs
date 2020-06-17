@@ -8,10 +8,10 @@ namespace NuTrello.Data.Repository
     public interface ITaskRepository
     {
         int? InitializeNewTask(DbListModel listToAddTask, string title, string desc);
-        bool DeleteTask(int boardId);
+        bool DeleteTask(int taskId);
         DbTaskModel GetTask(int taskId);
         bool MoveTaskToList(int taskId, DbListModel newList);
-        bool ModifyTaskInfo(int boardId, DbTaskModel modifiedTask);
+        bool ModifyTaskInfo(int taskId, DbTaskModel modifiedTask);
     }
     public class TaskRepository : ITaskRepository
     {

@@ -58,6 +58,16 @@ namespace NuTrello.Pages
             return RedirectToPage("/Boards", new {boardId = BoardId});
         }
 
+        public IActionResult OnPostDeleteTask(int taskId)
+        {
+                board = _boardRepository.GetBoard(BoardId);
+            _taskRepository.DeleteTask(taskId);
+
+            // Redirect to board page
+            return Page();
+            return RedirectToPage("/Boards", new {boardId = BoardId});
+        }
+
         public IActionResult OnPostCreateList()
         {
             // If field is filled, post new list

@@ -37,8 +37,10 @@
                   <div>
                     @task.Description
                     <div class="task-delete-btn">
-                      <button type="button" class="btn btn-success">Delete</button>
-                      <button type="button" class="btn btn-success" disabled>Edit</button>
+                      <form method="POST" asp-page-handler=DeleteTask asp-route-taskId=@task.Id>
+                        <button type="submit" class="btn btn-success">Delete</button>
+                      </form>
+                        <button type="button" class="btn btn-success" disabled>Edit</button>
                     </div>
                   </div>
             </li> 
