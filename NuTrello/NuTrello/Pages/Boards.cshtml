@@ -1,26 +1,211 @@
-﻿@page
+﻿@page "{boardId:int}"
+
+
+<link rel="stylesheet" href="~/css/boards.css" />
 @model NuTrello.Pages.BoardsModel
 @{
     ViewData["Title"] = "Boards";
 }
+@* board-header - renders the title of the board and a collapseable description*@
+<div class="board-header">
+    <h1 type="button" class="board-title" data-toggle="collapse" data-target="#board-hidden-@Model.board.Id">@Model.board.Title</h1>
+    <div class="collapse board-desc" id="board-hidden-@Model.board.Id" aria-hidden="true">
+        <hr>
+        <div>
+            @Model.board.Description
+        </div>
+    </div>
+</div>
+@*-----------------------------------------*@
 
-<h1>Boards</h1>
 
-<ul class="list-group list-group-horizontal-md">
-@foreach (var list in @Model.lists)
-{
-  <li class="list-group-item" id="@list">@list</li>
-  <ul class="list-group">
-  @foreach (var task in @Model.tasks)
-  {
-      if (true)
-      {     
-        <li class="list-group-item">@task</li>
-      }
-  }
-</ul>
+  @* Renders all the lists connected to the board*@
+  <div class="render-list">
+    <form method="POST" asp-page-handler="MoveTaskToList">
+      <input id="task-change-id" type="hidden" asp-for="MoveTask.TaskId" value="">
+      <input id="list-change-id" type="hidden" asp-for="MoveTask.ListId" value="">
+      <button id="submit-task-list-change" type="submit" hidden></button>
+    </form>
+    @foreach (var list in @Model.board.Lists)
+    {
+    <div class="render-content col-lg-3">
+      <div class="content-bg task-container" ondragover="onDragOverList(event)" ondrop="onDropOverListSetId(@list.Id)">
+        <div class="list-title-div">
+          <label class="list-title" for="task-group ">@list.Title</label>
+          <button type="button" class="btn btn-danger" data-toggle="modal" onclick="deleteListBtn(@list.Id)" data-target="#deleteModal">X</button>
+        </div>
+        
+    @* Renders all the tasks connected to the lists and a collapseable div with task description and delete/edit buttons for each task*@
+        <ul class="list-group task-group">
+          @foreach (var task in list.Tasks)
+          {           
+            <div class="list-group-item drag-item" draggable="true" ondragstart="onTaskDragStart(@task.Id)" ondragend="onTaskDragEnd(event)">
+            <li type="button" class="task-title" data-toggle="collapse" data-target="#desc-hidden-@task.Id">@task.Title</li>
+            <li class="collapse task-desc" id="desc-hidden-@task.Id" aria-hidden="true">
+                <hr>
+                  <div>
+                    @task.Description
+                    <div class="task-delete-btn">
+                      <form method="POST" asp-page-handler=DeleteTask asp-route-taskId=@task.Id>
+                        <button type="submit" class="btn btn-success">Delete</button>
+                        <button type="button" class="btn btn-success" disabled>Edit</button>
+                      </form>
+                    </div>
+                  </div>
+            </li> 
+            </div>
+          }
+
+          @* Create a task, collapsable inline *@
+            <li class="collapse list-group-item create-task" id="task-hidden-@list.Id" aria-hidden="true">
+                <form method="POST" asp-page-handler="CreateTask" asp-route-listId=@list.Id>
+                  <div class="form-group">
+                    <label for="task-title">Title*</label>
+                    <input type="text" id="task-title" class="form-control" asp-for="NewTask.Title" placeholder="My Task" required>
+                    <span class="text-danger" asp-validation-for="NewTask.Title"></span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="task-desc">Description</label>
+                    <textarea id="task-desc" class="form-control" asp-for="NewTask.Description" placeholder="Description is optional"></textarea>
+                  </div>
+
+                  <div>
+                    <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#task-hidden-@list.Id">Cancel</button>
+                    <button type="submit" class="btn btn-success" >Create Task</button>
+                  </div>
+                </form>
+            </li> 
+        </ul>
+        @* Create task-button*@
+          <button class="create-task-btn btn btn-outline-dark btn-sm" type="button" data-toggle="collapse" data-target="#task-hidden-@list.Id">Create New Task</button>
+        </div>
+      </div>
+    }
+
+    @* create list button*@
+    <div>
+        <button class="create-list-btn btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#listModal">Add a List</button>
+    </div>
+</div>
+
+
+<!-- List Modal -->
+<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="listModalLabel">Create New List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" asp-page-handler="CreateList">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="list-title">Title*</label>
+                        <input type="text" id="list-title" class="form-control" asp-for="NewList.Title" placeholder="Enter Title" required>
+                        <span class="text-danger" asp-validation-for="NewList.Title"></span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
+                        <button type="submit" class="btn btn-success">Create List</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete list modal -->
+<form method="POST" asp-page-handler=DeleteList>
+    <input type="hidden" id="list-delete-Id" asp-for="DeleteList.ListId">
+    <input type="submit" id="list-delete-button" hidden  value="">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to delete this list?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+  // Clear data in list modal when hidden
+  $('#listModal').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+  });
+
+// Clear data in new task when collapse
+  $('.create-task').on('hidden.bs.collapse', function () {
+    $(this).find('form')[0].reset();
+  })
+
+
+//Functions for deleting lists
+
+function deleteListBtn(listId){
+    $("#list-delete-Id").val(listId);
 }
-<div class ="list-group-item"><button>create list</button></div>
-</ul>
+
+function onListDelete(){
+  
+  if($('#list-delete-Id') != 0 ){
+    $("#list-delete-button").click();
+  }
+  $('#list-delete-Id').val("");
+}
+
+// Functions for drag and drop event that sets and remove data that's later being sent to form handler
+function onTaskDragStart(taskId) {
+
+  // Set taskid when a task is dropped
+  $('#task-change-id').val(taskId);
+}
+
+function onTaskDragEnd(event) {
+
+  // Get current values  
+  var taskId = $('#task-change-id').val();
+  var listId = $('#list-change-id').val();
+
+  // If there are values, send form with data
+  if (taskId != 0 && listId != 0) {
+    $('#submit-task-list-change').click();
+  }
+
+  // Reset values
+  $('#task-change-id').val("");
+  $('#list-change-id').val("");
+}
+
+function onDragOverList(e) {
+  e.preventDefault();
+}
+
+function onDropOverListSetId(listId) {
+  $('#list-change-id').val(listId);
+}
 
 
+</script>
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

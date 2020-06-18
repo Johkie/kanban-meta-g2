@@ -1,0 +1,11 @@
+
+.index-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.input-board-title{
+    margin-bottom: 2%;
+}

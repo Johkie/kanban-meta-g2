@@ -21,20 +21,20 @@ namespace NuTrello.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BoardLists",
+                name: "Lists",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BoardsModelId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
+                    DbBoardsModelId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BoardLists", x => x.Id);
+                    table.PrimaryKey("PK_Lists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BoardLists_Boards_BoardsModelId",
-                        column: x => x.BoardsModelId,
+                        name: "FK_Lists_Boards_DbBoardsModelId",
+                        column: x => x.DbBoardsModelId,
                         principalTable: "Boards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -46,7 +46,7 @@ namespace NuTrello.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BoardListsModelId = table.Column<int>(nullable: false),
+                    DbListModelId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     TaskOrder = table.Column<int>(nullable: false)
@@ -55,22 +55,22 @@ namespace NuTrello.Data.Migrations
                 {
                     table.PrimaryKey("PK_Tasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tasks_BoardLists_BoardListsModelId",
-                        column: x => x.BoardListsModelId,
-                        principalTable: "BoardLists",
+                        name: "FK_Tasks_Lists_DbListModelId",
+                        column: x => x.DbListModelId,
+                        principalTable: "Lists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BoardLists_BoardsModelId",
-                table: "BoardLists",
-                column: "BoardsModelId");
+                name: "IX_Lists_DbBoardsModelId",
+                table: "Lists",
+                column: "DbBoardsModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tasks_BoardListsModelId",
+                name: "IX_Tasks_DbListModelId",
                 table: "Tasks",
-                column: "BoardListsModelId");
+                column: "DbListModelId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -79,7 +79,7 @@ namespace NuTrello.Data.Migrations
                 name: "Tasks");
 
             migrationBuilder.DropTable(
-                name: "BoardLists");
+                name: "Lists");
 
             migrationBuilder.DropTable(
                 name: "Boards");

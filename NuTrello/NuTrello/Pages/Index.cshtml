@@ -1,32 +1,75 @@
-﻿@page
+﻿@page "{handler?}"
+<link rel="stylesheet" href="~/css/index.css" />
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-left">
-    Coola saker som knappar och listor här
-    
-</div>
-<div class="text-primary text-center">
-    Här ska det vara en board så småningom
+@* Render content*@
+<div class="index-content" style="display: flex; justify-content: center; margin-top: 7%;">
     <br>
-    @* if boards are empty, render a button to add a board *@
-    @if (Model.boards == null)
+    <div class="board-btns">
+      
+    @* if there are boards, render them in "buttonformat"*@
+    @if (Model.boards != null)
     {
-        <button class="createBoard" asp-area="" asp-page="/Boards/2">Create a Board</button>
-    }
-    else{
-        //  INTE I MVP: foreach board, rendera en button för varje bräde.
-        // Visa brädets knapp
-        <div>
-            <button id="2" onclick="/Boards">Brädknapp</button>
+        @foreach (var board in Model.boards)
+        {          
+        <div class="btn-group ">   
+            <a id="@board.Id" style="text-decoration: none" asp-area="" asp-page="/Boards" asp-route-boardId="@board.Id" class="btn btn-outline-dark btn-lg btn-block">@board.Title</a>
         </div>
+        }
+    }    
+    </div>
+    <br>
+</div>  
+@* Create-board button*@ 
+    <div class ="addBoard" style="display: flex; justify-content: center; margin: 5%;">
+        <button class="btn btn-success btn-lg" weight="64" height="64" data-toggle="modal" data-target="#boardModal">Add a Board</button>
+    </div>
 
-<div class ="lägg-till-board-knapp">
-    <h1>Board</h1>
-    <img src="~/img/plus-circle-solid.svg" weight="64" height="64" onclick="insertList()" />
 
+<!-- boardModal -->
+<div class="modal fade" id="boardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New Board</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <form method="POST" asp-page-handler="NewBoard">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="board-title">Title*</label>
+            <input type="text" id="board-title" class="form-control" asp-for="newBoard.Title" placeholder="Enter Title" required>
+            <span class="text-danger" asp-validation-for="newBoard.Title"></span>
+          </div>
+          <div class="form-group">
+            <label for="board-desc">Description</label>
+            <textarea class="form-control" id="board-desc" asp-for="newBoard.Description" placeholder="Enter Description"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <a class="nav-link text-dark" asp-area="" asp-page="/Boards">
+          <button type="submit" class="btn btn-success">Create Board</button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
-    }
-</div>
+
+<script type="text/javascript">
+  // Clear data in modal when hidden
+  $('#boardModal').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+});
+</script>
+
+@section scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
